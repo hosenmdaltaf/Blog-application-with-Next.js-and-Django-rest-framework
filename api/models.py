@@ -4,7 +4,7 @@ from django.urls import reverse
 # from account.models import Account
 # from taggit.managers import TaggableManager
 from django.contrib.auth.models import User
-from mptt.models import MPTTModel, TreeForeignKey
+
 
 class Author(models.Model):
     author= models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True)
@@ -20,8 +20,8 @@ class Post(models.Model):
     post_date = models.DateTimeField(auto_now_add=True)
     post_updated = models.DateField(auto_now=True)
     image=models.ImageField(upload_to='post_images', blank=True, null=True)
-    # category = models.ForeignKey('Category',on_delete=models.CASCADE, null=True, blank=True)
-    category = TreeForeignKey('Category', on_delete=models.CASCADE, null=True,blank=True)
+    category = models.ForeignKey('Category',on_delete=models.CASCADE, null=True, blank=True)
+   
  
 #    share
     view_count=models.IntegerField(default=0)
@@ -42,36 +42,9 @@ class Post(models.Model):
 
 
 
-# class Category(models.Model):
-#     name = models.CharField(max_length=200,null=True,blank=True)
+class Category(models.Model):
+    name = models.CharField(max_length=200,null=True,blank=True)
    
-#     def __str__(self):
-#         return self.name
-
-class Category(MPTTModel):
-    name = models.CharField(max_length=50, unique=True)
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children', db_index=True)
-    slug = models.SlugField()
-
-    class MPTTMeta:
-        order_insertion_by = ['name']
-
-    class Meta:
-        unique_together = (('parent', 'slug',))
-        verbose_name_plural = 'categories'
-
-    def get_slug_list(self):
-        try:
-            ancestors = self.get_ancestors(include_self=True)
-        except:
-            ancestors = []
-        else:
-            ancestors = [ i.slug for i in ancestors]
-            slugs = []
-        for i in range(len(ancestors)):
-            slugs.append('/'.join(ancestors[:i+1]))
-        return slugs
-
     def __str__(self):
         return self.name
 

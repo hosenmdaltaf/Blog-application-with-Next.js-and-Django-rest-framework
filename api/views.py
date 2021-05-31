@@ -4,7 +4,7 @@ from api.serializers import PostSerializer
 # from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework import generics
 from rest_framework.permissions import IsAdminUser
-from api.models import Author,Post,Category
+from api.models import Post,Category,Author
 
 from django.http import Http404
 from rest_framework.views import APIView
@@ -54,21 +54,4 @@ class PostDetail(generics.RetrieveAPIView):
 #     serializer_class = PostSerializer
 #     queryset = Post.objects.all()
 
-
-
-def show_category(request,hierarchy= None):
-    category_slug = hierarchy.split('/')
-    parent = None
-    root = Category.objects.all()
-
-    for slug in category_slug[:-1]:
-        parent = root.get(parent=parent, slug = slug)
-
-    try:
-        instance = Category.objects.get(parent=parent,slug=category_slug[-1])
-    except:
-        instance = get_object_or_404(Post, slug = category_slug[-1])
-        return render(request, "postDetail.html", {'instance':instance})
-    else:
-        return render(request, 'categories.html', {'instance':instance})
  
