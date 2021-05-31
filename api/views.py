@@ -4,7 +4,7 @@ from api.serializers import PostSerializer
 # from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework import generics
 from rest_framework.permissions import IsAdminUser
-from api.models import Author,Post
+from api.models import Author,Post,Category
 
 from django.http import Http404
 from rest_framework.views import APIView
