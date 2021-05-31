@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-dn49z3)jvk2cfw=a1nq0jfn^#hus8*4_3o&^(k5*kn#8dvgd*i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['altaf-blog-api.herokuapp.com','127.0.0.1']
 
 
 # Application definition
@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -74,8 +75,12 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 # }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(os.path.join(BASE_DIR, "db.sqlite3"))
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd4p9mvb7n43m61',
+        'USER':'bporsyogkvwjlv',
+        'PASSWORD':'0c08af5e137f2e72bbba48d2ab4de3942c5a79109f75a83476591e474bb58ca8',
+        'HOST':'ec2-3-232-163-23.compute-1.amazonaws.com',
+        'PORT':'5432'
     }
 }
 
@@ -116,6 +121,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
