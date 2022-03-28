@@ -6,8 +6,8 @@ hyperlink==21.0.0
 idna==2.10
 incremental==21.3.0
 memcache==0.5.1
-# Pillow==8.2.0
-# psycopg2==2.8.6
+Pillow==8.2.0
+psycopg2==2.8.6
 urllib3==1.26.4
 whitenoise==5.2.0
 gunicorn==20.1.0
